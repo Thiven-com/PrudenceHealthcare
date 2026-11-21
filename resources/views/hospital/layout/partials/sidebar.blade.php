@@ -8,16 +8,16 @@
 	@endif
 		<!-- Logo -->
 		<div class="sidebar-logo">
-			<a href="{{url('index')}}" class="logo logo-normal">
+			<a href="{{ route('hospital.dashboard') }}" class="logo logo-normal">
 				<img src="{{URL::asset('build/img/logo.png')}}" alt="Img">
 			</a>
-			<a href="{{url('index')}}" class="logo logo-white">
+			<a href="{{ route('hospital.dashboard') }}" class="logo logo-white">
 				<img src="{{URL::asset('build/img/logo-white.svg')}}" alt="Img">
 			</a>
-			<a href="{{url('index')}}" class="logo-small">
+			<a href="{{ route('hospital.dashboard') }}" class="logo-small">
 				<img src="{{URL::asset('build/img/logo-small.png')}}" alt="Img">
 			</a>
-			<a href="{{url('index')}}" class="logo-small-white">
+			<a href="{{ route('hospital.dashboard') }}" class="logo-small-white">
 				<img src="{{URL::asset('build/img/logo-small-white.png')}}" alt="Img">
 			</a>
 			<a id="toggle_btn" href="javascript:void(0);">
@@ -55,7 +55,7 @@
 			</div>
 			<div class="d-flex align-items-center justify-content-between menu-item mb-3">
 				<div>
-					<a href="{{url('index')}}" class="btn btn-sm btn-icon bg-light">
+					<a href="{{ route('hospital.dashboard') }}" class="btn btn-sm btn-icon bg-light">
 						<i class="ti ti-layout-grid-remove"></i>
 					</a>
 				</div>
