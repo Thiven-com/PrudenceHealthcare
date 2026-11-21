@@ -1,0 +1,33 @@
+@use "../utils/variables";
+
+// Default arrow styling for sliders that never had page-specific .owl-nav
+// overrides in this project (product-slide, notes-slider, video-section,
+// folders-carousel, files-carousel, channels-slider, social-gallery-slider) -
+// ported 1:1 from Owl Carousel's own default theme (owl.theme.default.min.css)
+// so those carousels keep the same look after the Slick migration. Carousels
+// with their own more-specific overrides (e.g. .pos-category .slick-arrow-wrap)
+// win over this via normal CSS specificity, regardless of load order.
+.slick-arrow-wrap {
+    text-align: center;
+    -webkit-tap-highlight-color: transparent;
+    margin-top: 10px;
+
+    button.slick-prev,
+    button.slick-next {
+        color: variables.$white;
+        font-size: 14px;
+        margin: 5px;
+        padding: 4px 7px;
+        background: #D6D6D6;
+        display: inline-block;
+        cursor: pointer;
+        border-radius: 3px;
+        border: none;
+
+        &:hover {
+            background: #869791;
+            color: variables.$white;
+            text-decoration: none;
+        }
+    }
+}

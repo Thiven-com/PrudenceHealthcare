@@ -1,0 +1,169 @@
+@use "../utils/mixins";
+@use "../utils/variables";
+
+.ts-wrapper {
+    position: relative;
+    min-width: 100% !important;
+
+    &.single .ts-control {
+        height: 38px;
+        cursor: pointer;
+    }
+}
+
+.ts-control {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    overflow: hidden;
+    box-sizing: border-box;
+    width: 100%;
+
+    > input {
+        flex: 1 1 auto;
+        min-width: 3rem;
+        border: 0 none !important;
+        background: none !important;
+        box-shadow: none !important;
+        outline: none !important;
+        margin: 0 !important;
+    }
+}
+
+.ts-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 2px 0 0;
+}
+
+.ts-dropdown-content {
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: 200px;
+}
+
+.ts-hidden-accessible {
+    border: 0 !important;
+    clip: rect(0 0 0 0) !important;
+    clip-path: inset(50%) !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    white-space: nowrap !important;
+}
+
+// ---- Skin (colors/borders, ported 1:1 from the previous Select2 styling) ----
+.ts-wrapper.single .ts-control {
+    border: 1px solid var(--Stroke, rgba(145, 158, 171, 0.30));
+    @include mixins.rounded(5px);
+    color: variables.$text-color;
+    line-height: 38px;
+    padding: 0 26px 0 0.85rem;
+    font-size: variables.$font-size-14;
+    font-weight: variables.$font-weight-normal;
+    background: variables.$white;
+    position: relative;
+
+    input {
+        color: inherit;
+        font-size: inherit;
+        font-weight: inherit;
+        line-height: 38px;
+        height: 38px;
+        padding: 0 !important;
+        cursor: pointer;
+    }
+
+    &::after {
+        content: '';
+        @include mixins.position(absolute, 50%, 0.85rem, null, null);
+        border-color: variables.$gray-900 transparent transparent transparent;
+        border-style: solid;
+        border-width: 5px 4px 0 4px;
+        height: 0;
+        width: 0;
+        margin-top: -2px;
+        pointer-events: none;
+        transition: transform 0.2s ease;
+    }
+}
+
+.ts-wrapper.single.dropdown-active .ts-control::after {
+    @include mixins.transform(rotate(180deg));
+    margin-top: -3px;
+}
+
+.ts-wrapper.single.focus .ts-control {
+    background: variables.$white !important;
+    border-color: variables.$primary;
+}
+
+.ts-wrapper.multi .ts-control {
+    border: 1px solid var(--Stroke, rgba(145, 158, 171, 0.30));
+    @include mixins.rounded(5px);
+    color: variables.$gray-900;
+    line-height: 24px;
+    height: auto;
+    min-height: 38px;
+    padding: 4px 6px;
+
+    > div,
+    > .item {
+        display: inline-flex;
+        align-items: center;
+        background-color: variables.$info;
+        border-color: variables.$info;
+        color: variables.$white;
+        border: 0 solid variables.$info;
+        border-radius: 3px;
+        padding: 2px 6px;
+        margin: 2px 4px 2px 0;
+
+        &.active {
+            background: variables.$info;
+            color: variables.$white;
+        }
+    }
+
+    .item .remove {
+        border-left: 1px solid rgba(variables.$white, 0.4);
+        margin-left: 6px;
+        padding-left: 6px;
+        cursor: pointer;
+    }
+}
+
+.ts-dropdown {
+    z-index: 9999;
+    background: variables.$white;
+    border: 1px solid variables.$border-color;
+    @include mixins.rounded(5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+    .option,
+    .optgroup-header,
+    .no-results,
+    .create {
+        padding: 6px 12px;
+        cursor: pointer;
+    }
+
+    .option.active {
+        background: variables.$primary;
+        color: variables.$white;
+    }
+}
+
+.select-language {
+    .ts-wrapper.single .ts-control::after {
+        top: 55%;
+    }
+    .ts-wrapper.single.focus.dropdown-active .ts-control::after {
+        top: 42%;
+    }
+}
