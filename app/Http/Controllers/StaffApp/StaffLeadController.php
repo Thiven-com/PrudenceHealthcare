@@ -234,6 +234,7 @@ class StaffLeadController extends Controller
             'followUps',
             'statusHistories',
             'activities',
+            'assignedStaff',
         ])
             ->where('hospital_id', $staff->hospital_id)
             ->where('assigned_to', $staff->id)

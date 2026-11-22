@@ -106,12 +106,19 @@
 									<span>Staff Overview</span>
 								</a>
 							</li>
+							<li class="{{ request()->routeIs('admin.lead-modules.*') ? 'active' : '' }}">
+								<a href="{{ route('admin.lead-modules.index') }}">
+									<i class="ti ti-clipboard-list fs-16 me-2"></i>
+									<span>Lead Modules</span>
+								</a>
+							</li>
 							<li class="{{ request()->routeIs('admin.lead-overview.*') ? 'active' : '' }}">
 								<a href="{{ route('admin.lead-overview.index') }}">
 									<i class="ti ti-clipboard-list fs-16 me-2"></i>
 									<span>Lead Overview</span>
 								</a>
 							</li>
+
 						</ul>
 					</li>
 

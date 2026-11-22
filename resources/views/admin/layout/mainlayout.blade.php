@@ -11,6 +11,28 @@
 
 @component('admin.components.loader')
 @endcomponent
+<style>
+    /* Allow dropdowns to extend outside cards */
+    .card,
+    .card-body,
+    .accordion,
+    .accordion-item,
+    .accordion-collapse,
+    .accordion-body,
+    .row,
+    .col,
+    .form-group {
+        overflow: visible !important;
+    }
+
+    /* Keep dropdown above surrounding sections */
+    .dropdown-menu,
+    .select2-container,
+    .select2-dropdown {
+        z-index: 99999 !important;
+        position: relative;
+    }
+</style>
 
 <!-- Main Wrapper -->
 @include('admin.layout.partials.main-wrapper')

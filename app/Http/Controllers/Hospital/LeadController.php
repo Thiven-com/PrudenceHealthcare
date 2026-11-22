@@ -369,9 +369,18 @@ class LeadController extends Controller
             return null;
         }
 
-        return $model::where('hospital_id', $this->hospitalId())
-            ->where('lead_id', $lead->id)
-            ->first();
+        $query = $model::where('hospital_id', $this->hospitalId())
+            ->where('lead_id', $lead->id);
+
+        if ($slug === 'community') {
+            $query->with('members');
+        }
+
+        if ($slug === 'company-health-insurance') {
+            $query->with('employees');
+        }
+
+        return $query->first();
     }
 
     /**

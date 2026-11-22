@@ -116,5 +116,9 @@ class Lead extends Model
     {
         return $this->hasMany(LeadTask::class);
     }
-    
+
+    public function assignedStaff(): BelongsTo
+    {
+        return $this->belongsTo(Staff::class, 'assigned_to', 'id');
+    }
 }

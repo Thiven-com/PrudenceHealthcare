@@ -7,6 +7,13 @@ use App\Models\Lead;
 use App\Models\Hospital;
 use App\Models\LeadModule;
 use Illuminate\Http\Request;
+use App\Models\DoctorLeadDetail;
+use App\Models\CommunityLeadDetail;
+use App\Models\CompanyHealthInsuranceDetail;
+use App\Models\PersonalHealthInsuranceDetail;
+use App\Models\CashTreatmentDetail;
+use App\Models\CreditTreatmentDetail;
+use App\Models\HealthAdvisorDetail;
 
 class LeadOverviewController extends Controller
 {
@@ -121,8 +128,44 @@ class LeadOverviewController extends Controller
             'leadModule',
             'followUps',
             'activities',
+            'assignedStaff',
         ])->findOrFail($id);
 
-        return view('admin.lead-overview.show', compact('lead'));
+        $moduleDetails = null;
+
+        $slug = $lead->leadModule?->slug;
+
+        $models = [
+            'doctor' => DoctorLeadDetail::class,
+            'community' => CommunityLeadDetail::class,
+            'company-health-insurance' => CompanyHealthInsuranceDetail::class,
+            'personal-health-insurance' => PersonalHealthInsuranceDetail::class,
+            'cash-treatment' => CashTreatmentDetail::class,
+            'credit-treatment' => CreditTreatmentDetail::class,
+            'health-advisor' => HealthAdvisorDetail::class,
+        ];
+
+        if (isset($models[$slug])) {
+
+            $model = $models[$slug];
+
+            $query = $model::where('hospital_id', $lead->hospital_id)
+                ->where('lead_id', $lead->id);
+
+            if ($slug === 'community') {
+                $query->with('members');
+            }
+
+            if ($slug === 'company-health-insurance') {
+                $query->with('employees');
+            }
+
+            $moduleDetails = $query->first();
+        }
+
+        return view('admin.lead-overview.show', compact(
+            'lead',
+            'moduleDetails'
+        ));
     }
 }

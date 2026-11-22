@@ -24526,7 +24526,7 @@
 						<div class="col-md-7">
 							<p class="text-dark mb-2 fw-medium fs-16">Invoice From :</p>
 							<div>
-								<p class="mb-1">Dreamspos</p>
+								<p class="mb-1">Prudence Healthcare</p>
 								<p class="mb-1">367 Hillcrest Lane, Irvine, California,
 									United States</p>
 								<p class="mb-1">dreamspos@example.com</p>
@@ -28765,7 +28765,7 @@
 						<div class="col-md-7">
 							<p class="text-dark mb-2 fw-medium fs-16">Invoice From :</p>
 							<div>
-								<p class="mb-1">Dreamspos</p>
+								<p class="mb-1">Prudence Healthcare</p>
 								<p class="mb-1">367 Hillcrest Lane, Irvine, California,
 									United States</p>
 								<p class="mb-1">dreamspos@example.com</p>

@@ -12,9 +12,9 @@
                     <p class="text-muted mb-0">Manage platform lead modules</p>
                 </div>
 
-                <a href="{{ route('admin.lead-modules.create') }}" class="btn btn-primary">
+                {{-- <a href="{{ route('admin.lead-modules.create') }}" class="btn btn-primary">
                     <i class="ti ti-plus me-1"></i> Add Module
-                </a>
+                </a> --}}
             </div>
 
             @if(session('success'))
@@ -37,7 +37,7 @@
                                     <th>Leads</th>
                                     <th>Status</th>
                                     <th>Created</th>
-                                    <th class="text-end">Actions</th>
+                                    {{-- <th class="text-end">Actions</th> --}}
                                 </tr>
                             </thead>
                             <tbody>
@@ -55,7 +55,7 @@
                                             @endif
                                         </td>
                                         <td>{{ $module->created_at?->format('d M Y') ?? '-' }}</td>
-                                        <td class="text-end">
+                                        {{-- <td class="text-end">
                                             <a href="{{ route('admin.lead-modules.edit', $module->id) }}"
                                                 class="btn btn-sm btn-light">
                                                 <i class="ti ti-edit"></i>
@@ -70,11 +70,11 @@
                                                     <i class="ti ti-trash"></i>
                                                 </button>
                                             </form>
-                                        </td>
+                                        </td> --}}
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="7" class="text-center text-muted py-4">
+                                        <td colspan="6" class="text-center text-muted py-4">
                                             No lead modules found.
                                         </td>
                                     </tr>
