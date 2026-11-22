@@ -46,8 +46,8 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Dreams POS is a powerful Bootstrap based Inventory Management Admin Template designed for businesses, offering seamless invoicing, project tracking, and estimates.">
-<meta name="keywords" content="inventory management, admin dashboard, bootstrap template, invoicing, estimates, business management, responsive admin, POS system">
-<meta name="author" content="Dreams Technologies">
+<meta name="description" content="Prudence Health Care provides trusted healthcare services, quality medical care, and patient-focused solutions to promote better health and well-being.">
+<meta name="keywords" content="Prudence Health Care, healthcare services, medical care, hospital, patient care, healthcare solutions, medical services, health and wellness">
+<meta name="author" content="Prudence Health Care">
 <meta name="robots" content="index, follow">
-<title> {{ $title }} | Dreams POS - Inventory Management & Admin Dashboard Template</title>
+<title>{{ $title }} | Prudence Health Care - Quality Healthcare Services</title>
