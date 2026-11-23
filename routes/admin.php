@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\HospitalAdditionalDetailsController;
 use App\Http\Controllers\Admin\HospitalController;
 use App\Http\Controllers\Admin\Auth\AdminAuthController;
 use App\Http\Controllers\Admin\HospitalDocumentController;
@@ -15,11 +16,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     // Route::middleware('guest:admin')->group(function () {
 
-        Route::get('/login', [AdminAuthController::class, 'showLogin'])
-            ->name('login');
+    Route::get('/login', [AdminAuthController::class, 'showLogin'])
+        ->name('login');
 
-        Route::post('/login', [AdminAuthController::class, 'login'])
-            ->name('login.submit');
+    Route::post('/login', [AdminAuthController::class, 'login'])
+        ->name('login.submit');
 
     // });
 
@@ -72,6 +73,18 @@ Route::prefix('admin')->name('admin.')->group(function () {
             ->name('lead-overview.show');
         Route::get('/lead-reports', [LeadReportController::class, 'index'])
             ->name('lead-reports.index');
+
+        Route::prefix('hospital/{hospital}')
+            ->name('hospitals.')
+            ->controller(HospitalAdditionalDetailsController::class)
+            ->group(function () {
+                Route::get('/facilities', 'facilities')->name('facilities');
+                Route::get('/tieups', 'tieups')->name('tieups');
+                Route::get('/emergency', 'emergency')->name('emergency');
+            });
+
+
+
         Route::post('/logout', [AdminAuthController::class, 'logout'])
             ->name('logout');
 

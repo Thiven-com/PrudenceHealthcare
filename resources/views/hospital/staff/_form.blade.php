@@ -28,7 +28,7 @@
                             <span>
                                 <img id="staffImagePreview"
                                      src="{{ $editing && $staffMember->profile_image
-                                        ? asset('storage/' . $staffMember->profile_image)
+                                        ? asset($staffMember->profile_image)
                                         : asset('build/img/users/user-01.jpg') }}"
                                      alt="Staff Image"
                                      style="width:80px;height:80px;object-fit:cover;">

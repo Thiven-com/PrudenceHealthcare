@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Hospital;
+use App\Models\HospitalEmergencyContact;
+use App\Models\HospitalFacility;
+use App\Models\HospitalTieup;
 use App\Models\LeadModule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -105,10 +108,32 @@ class HospitalController extends Controller
             ->with('success', 'Hospital added successfully.');
     }
 
+
     public function show(Hospital $hospital)
     {
-        return view('admin.hospitals.show', compact('hospital'));
+        $facilities = HospitalFacility::where('hospital_id', $hospital->id)
+            ->latest()
+            ->paginate(10, ['*'], 'facilities_page');
+
+        $tieups = HospitalTieup::where('hospital_id', $hospital->id)
+            ->latest()
+            ->paginate(10, ['*'], 'tieups_page');
+
+        $emergencyContacts = HospitalEmergencyContact::where(
+            'hospital_id',
+            $hospital->id
+        )
+            ->latest()
+            ->paginate(10, ['*'], 'emergency_page');
+
+        return view('admin.hospitals.show', compact(
+            'hospital',
+            'facilities',
+            'tieups',
+            'emergencyContacts'
+        ));
     }
+
 
     public function edit(Hospital $hospital)
     {

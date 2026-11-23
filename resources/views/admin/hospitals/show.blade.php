@@ -291,6 +291,43 @@
                         </div>
                     </div>
 
+                    {{-- Hospital Additional Details Links --}}
+                    <div class="card rounded-0 border-0">
+                        <div class="card-header bg-light">
+                            <h6 class="mb-0">Hospital Additional Details</h6>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="row g-3">
+
+                                <div class="col-md-4">
+                                    <a href="{{ route('admin.hospitals.facilities', $hospital->id) }}"
+                                        class="btn btn-outline-primary w-100">
+                                        <i class="ti ti-building-hospital me-2"></i>
+                                        Hospital Facilities
+                                    </a>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <a href="{{ route('admin.hospitals.tieups', $hospital->id) }}"
+                                        class="btn btn-outline-primary w-100">
+                                        <i class="ti ti-handshake me-2"></i>
+                                        Hospital Tie-ups
+                                    </a>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <a href="{{ route('admin.hospitals.emergency', $hospital->id) }}"
+                                        class="btn btn-outline-primary w-100">
+                                        <i class="ti ti-phone-call me-2"></i>
+                                        Emergency Connect
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
                     {{-- Approval Information --}}
                     <div class="card rounded-0 border-0">
 
