@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\Auth\AdminAuthController;
 use App\Http\Controllers\Admin\HospitalDocumentController;
 use App\Http\Controllers\Admin\LeadModuleController;
 use App\Http\Controllers\Admin\LeadOverviewController;
+use App\Http\Controllers\Admin\LeadReportController;
 use App\Http\Controllers\Admin\StaffOverviewController;
 use Illuminate\Support\Facades\Route;
 
@@ -69,7 +70,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         Route::get('/lead-overview/{id}', [LeadOverviewController::class, 'show'])
             ->name('lead-overview.show');
-
+        Route::get('/lead-reports', [LeadReportController::class, 'index'])
+            ->name('lead-reports.index');
         Route::post('/logout', [AdminAuthController::class, 'logout'])
             ->name('logout');
 

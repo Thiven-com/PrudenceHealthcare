@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\StaffApp\HospitalDetailsController;
 use App\Http\Controllers\StaffApp\StaffAuthController;
 use App\Http\Controllers\StaffApp\StaffDashboardController;
 use App\Http\Controllers\StaffApp\StaffFollowUpController;
@@ -37,6 +38,7 @@ Route::name('api.staff.')->group(function () {
         Route::post('/followups', [StaffFollowUpController::class, 'store']);
         Route::put('/followups/{id}', [StaffFollowUpController::class, 'update']);
         Route::delete('/followups/{id}', [StaffFollowUpController::class, 'destroy']);
+        Route::get('/hospital-details', [HospitalDetailsController::class, 'index']);
         Route::post('/logout', [StaffAuthController::class, 'logout'])
             ->name('logout');
 

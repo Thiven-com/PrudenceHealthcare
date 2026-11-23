@@ -85,4 +85,19 @@ class Hospital extends Authenticatable
     {
         return $this->morphMany(Notification::class, 'notifiable');
     }
+
+    public function tieups()
+    {
+        return $this->hasMany(HospitalTieup::class);
+    }
+
+    public function facilities()
+    {
+        return $this->hasMany(HospitalFacility::class);
+    }
+
+    public function emergencyContacts()
+    {
+        return $this->hasMany(HospitalEmergencyContact::class);
+    }
 }

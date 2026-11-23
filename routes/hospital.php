@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Hospital\DepartmentController;
 use App\Http\Controllers\Hospital\DesignationController;
+use App\Http\Controllers\Hospital\HospitalAdditionalDetailsController;
 use App\Http\Controllers\Hospital\LeadController;
 use App\Http\Controllers\Hospital\StaffController;
 use Illuminate\Support\Facades\Route;
@@ -46,6 +47,23 @@ Route::prefix('hospital')->name('hospital.')->group(function () {
         Route::resource('designations', DesignationController::class);
         Route::resource('staff', StaffController::class);
         Route::resource('leads', LeadController::class);
+
+        Route::prefix('additional-details')
+            ->name('additional-details.')
+            ->controller(HospitalAdditionalDetailsController::class)
+            ->group(function () {
+
+                Route::get('/', 'index')->name('index');
+
+                Route::post('/{type}', 'store')->name('store');
+
+                Route::get('/{type}/{id}/edit', 'edit')->name('edit');
+
+                Route::put('/{type}/{id}', 'update')->name('update');
+
+                Route::delete('/{type}/{id}', 'destroy')->name('destroy');
+            });
+
         Route::post('/logout', [HospitalAuthController::class, 'logout'])
             ->name('logout');
     });

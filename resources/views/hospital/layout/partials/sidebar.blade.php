@@ -123,6 +123,12 @@
 									<span>Leads</span>
 								</a>
 							</li>
+							<li class="{{ request()->routeIs('hospital.additional-details.*') ? 'active' : '' }}">
+								<a href="{{ route('hospital.additional-details.index') }}">
+									<i class="ti ti-building-hospital fs-16 me-2"></i>
+									<span>Hospital Additional Details</span>
+								</a>
+							</li>
 						</ul>
 					</li>
 

@@ -118,6 +118,12 @@
 									<span>Lead Overview</span>
 								</a>
 							</li>
+							<li class="{{ request()->routeIs('admin.lead-reports.*') ? 'active' : '' }}">
+								<a href="{{ route('admin.lead-reports.index') }}">
+									<i class="ti ti-chart-bar fs-16 me-2"></i>
+									<span>Lead Reports</span>
+								</a>
+							</li>
 
 						</ul>
 					</li>
