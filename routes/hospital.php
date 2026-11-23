@@ -11,31 +11,31 @@ use App\Http\Controllers\Hospital\DashboardController;
 
 Route::prefix('hospital')->name('hospital.')->group(function () {
 
-    Route::middleware('guest:hospital')->group(function () {
+    // Route::middleware('guest:hospital')->group(function () {
 
-        // Login
-        Route::get('/login', [HospitalAuthController::class, 'showLogin'])
-            ->name('login');
+    // Login
+    Route::get('/login', [HospitalAuthController::class, 'showLogin'])
+        ->name('login');
 
-        Route::post('/login', [HospitalAuthController::class, 'sendLoginOtp'])
-            ->name('login.submit');
+    Route::post('/login', [HospitalAuthController::class, 'sendLoginOtp'])
+        ->name('login.submit');
 
-        Route::post('/verify-login-otp', [HospitalAuthController::class, 'verifyLoginOtp'])
-            ->name('verify-login-otp');
+    Route::post('/verify-login-otp', [HospitalAuthController::class, 'verifyLoginOtp'])
+        ->name('verify-login-otp');
 
-        // Registration
-        Route::get('/register', [HospitalAuthController::class, 'showRegister'])
-            ->name('register');
+    // Registration
+    Route::get('/register', [HospitalAuthController::class, 'showRegister'])
+        ->name('register');
 
-        Route::post('/register', [HospitalAuthController::class, 'register'])
-            ->name('register.submit');
+    Route::post('/register', [HospitalAuthController::class, 'register'])
+        ->name('register.submit');
 
-        Route::get('/register/verify-otp', [HospitalAuthController::class, 'showRegistrationOtp'])
-            ->name('register.verify');
+    Route::get('/register/verify-otp', [HospitalAuthController::class, 'showRegistrationOtp'])
+        ->name('register.verify');
 
-        Route::post('/register/verify-otp', [HospitalAuthController::class, 'verifyRegistrationOtp'])
-            ->name('register.verify.submit');
-    });
+    Route::post('/register/verify-otp', [HospitalAuthController::class, 'verifyRegistrationOtp'])
+        ->name('register.verify.submit');
+    // });
 
     // Authenticated Hospital Routes
     Route::middleware('hospital.auth')->group(function () {

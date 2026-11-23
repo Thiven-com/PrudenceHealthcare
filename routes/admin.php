@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')->name('admin.')->group(function () {
 
-    Route::middleware('guest:admin')->group(function () {
+    // Route::middleware('guest:admin')->group(function () {
 
         Route::get('/login', [AdminAuthController::class, 'showLogin'])
             ->name('login');
@@ -21,7 +21,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/login', [AdminAuthController::class, 'login'])
             ->name('login.submit');
 
-    });
+    // });
 
     Route::middleware('admin.auth')->group(function () {
 
