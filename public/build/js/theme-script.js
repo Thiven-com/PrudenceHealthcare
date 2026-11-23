@@ -5,8 +5,8 @@ document.querySelector("html").setAttribute('data-color', localStorage.getItem('
 document.querySelector("html").setAttribute('data-topbar', localStorage.getItem('topbar') || 'white');
 document.querySelector("html").setAttribute('data-layout', localStorage.getItem('layout') || 'default');
 document.querySelector("html").setAttribute('data-width', localStorage.getItem('width') || 'fluid');
-
-let themesettings = `
+let themesettings = ``;
+let themesettings1 = `
 <div class="sidebar-contact ">
     <div class="toggle-theme"  data-bs-toggle="offcanvas" data-bs-target="#theme-setting"><i class="fa fa-cog fa-w-16 fa-spin"></i></div>
     </div>
