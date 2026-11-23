@@ -35,7 +35,7 @@
 				<a href="javascript:void(0);" class="nav-link userset" data-bs-toggle="dropdown">
 					<span class="user-info p-0">
 						<span class="user-letter">
-							<img src="{{URL::asset('build/img/profiles/avator1.jpg')}}" alt="Img" class="img-fluid">
+							<img src="{{asset('website/assets/favicon.png')}}" alt="Img" class="img-fluid">
 						</span>
 					</span>
 				</a>
