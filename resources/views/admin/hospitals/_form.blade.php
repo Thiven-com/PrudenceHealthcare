@@ -27,30 +27,47 @@
                 <div class="new-employee-field">
 
                     <div class="profile-pic-upload {{ isset($hospital) ? 'edit-pic' : '' }}">
-                        <div class="profile-pic">
-                            @if(isset($hospital) && $hospital->logo)
-                                <span>
-                                    <img src="{{ asset($hospital->logo) }}"
-                                        alt="Hospital Logo"
-                                        style="width:100px;height:100px;object-fit:contain;">
-                                </span>
-                            @else
-                                <span>
-                                    <i data-feather="plus-circle" class="plus-down-add"></i>
-                                    Hospital Logo
-                                </span>
-                            @endif
-                        </div>
+    <div class="profile-pic">
 
-                        <div class="input-blocks mb-0">
-                            <div class="image-upload mb-0">
-                                <input type="file" name="logo" accept="image/*">
-                                <div class="image-uploads">
-                                    <h4>Change Image</h4>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+        <img
+            id="hospitalLogoPreview"
+            src="{{ isset($hospital) && $hospital->logo ? asset($hospital->logo) : '' }}"
+            alt="Hospital Logo"
+            style="
+                width: 100px;
+                height: 100px;
+                object-fit: contain;
+                {{ isset($hospital) && $hospital->logo ? '' : 'display:none;' }}
+            "
+        >
+
+        <span id="hospitalLogoPlaceholder"
+            style="{{ isset($hospital) && $hospital->logo ? 'display:none;' : '' }}">
+            <i data-feather="plus-circle" class="plus-down-add"></i>
+            Hospital Logo
+        </span>
+
+    </div>
+
+    <div class="input-blocks mb-0">
+        <div class="image-upload mb-0">
+            <input
+                type="file"
+                name="logo"
+                id="hospital_logo"
+                accept="image/*"
+            >
+
+            <div class="image-uploads">
+                <h4>Change Image</h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+@error('logo')
+    <div class="text-danger mb-3">{{ $message }}</div>
+@enderror
 
                     @error('logo')
                         <div class="text-danger mb-3">{{ $message }}</div>
@@ -367,5 +384,39 @@ document.addEventListener('DOMContentLoaded', function () {
 
     status.addEventListener('change', toggleReason);
     toggleReason();
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const imageInput = document.getElementById('hospital_logo');
+    const preview = document.getElementById('hospitalLogoPreview');
+    const placeholder = document.getElementById('hospitalLogoPlaceholder');
+
+    imageInput.addEventListener('change', function () {
+
+        const file = this.files[0];
+
+        if (file) {
+
+            if (!file.type.startsWith('image/')) {
+                alert('Please select a valid image.');
+                this.value = '';
+                return;
+            }
+
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+                placeholder.style.display = 'none';
+            };
+
+            reader.readAsDataURL(file);
+        }
+
+    });
+
 });
 </script>
