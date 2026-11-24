@@ -261,6 +261,7 @@ class StaffAuthController extends Controller
                 'profile_image' => $staff->profile_image,
                 'department' => $staff->department?->name,
                 'designation' => $staff->designation?->name,
+                'designation_slug' => $staff->designation?->slug,
                 'joining_date' => $staff->joining_date,
                 'status' => $staff->status,
             ],

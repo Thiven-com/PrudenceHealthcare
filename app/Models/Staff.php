@@ -36,6 +36,8 @@ class Staff extends Authenticatable
         'leaving_date',
         'status',
         'last_login_at',
+        'added_by',
+        'added_by_type',
     ];
 
     protected $hidden = [

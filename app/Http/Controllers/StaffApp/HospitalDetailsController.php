@@ -73,7 +73,7 @@ class HospitalDetailsController extends Controller
                         'address' => $item->address,
                         'description' => $item->description,
                         'image' => $item->image
-                            ? Storage::disk('public')->url($item->image)
+                            ? asset($item->image)
                             : null,
                         'status' => $item->status,
                     ];
@@ -94,7 +94,7 @@ class HospitalDetailsController extends Controller
                         'operating_hours' => $item->operating_hours,
                         'contact_number' => $item->contact_number,
                         'image' => $item->image
-                            ? Storage::disk('public')->url($item->image)
+                            ? asset($item->image)
                             : null,
                         'status' => $item->status,
                     ];
