@@ -126,10 +126,10 @@
                             <span class="btn-searchset">
                                 <i class="ti ti-search fs-14"></i>
                             </span>
-                            <input type="text" name="search"
+                            {{-- <input type="text" name="search"
                                 class="form-control"
                                 placeholder="Search hospital, registration, mobile..."
-                                value="{{ request('search') }}">
+                                value="{{ request('search') }}"> --}}
                         </div>
                     </div>
 
@@ -174,12 +174,7 @@
                     <table class="table datatable">
                         <thead class="thead-light">
                             <tr>
-                                <th class="no-sort">
-                                    <label class="checkboxs">
-                                        <input type="checkbox" id="select-all">
-                                        <span class="checkmarks"></span>
-                                    </label>
-                                </th>
+                                <th>S.no</th>
                                 <th>ID</th>
                                 <th>Hospital</th>
                                 <th>Registration No</th>
@@ -197,10 +192,7 @@
                             @forelse($hospitals as $hospital)
                                 <tr>
                                     <td>
-                                        <label class="checkboxs">
-                                            <input type="checkbox" value="{{ $hospital->id }}">
-                                            <span class="checkmarks"></span>
-                                        </label>
+                                        {{ $loop->iteration }}
                                     </td>
 
                                     <td>
