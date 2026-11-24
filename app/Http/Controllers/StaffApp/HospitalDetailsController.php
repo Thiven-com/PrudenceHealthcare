@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\StaffApp;
 
 use App\Http\Controllers\Controller;
+use App\Models\Hospital;
 use App\Models\HospitalTieup;
 use App\Models\HospitalFacility;
 use App\Models\HospitalEmergencyContact;
@@ -13,6 +14,7 @@ use Throwable;
 
 class HospitalDetailsController extends Controller
 {
+
     public function index(Request $request)
     {
         try {
@@ -26,6 +28,34 @@ class HospitalDetailsController extends Controller
             }
 
             $hospitalId = $staff->hospital_id;
+
+            // Hospital Profile
+            $hospital = Hospital::where('id', $hospitalId)
+                ->first();
+
+            if (!$hospital) {
+                return response()->json([
+                    'success' => 0,
+                    'message' => 'Hospital not found.',
+                ], 404);
+            }
+
+            $hospitalDetails = [
+                'id' => $hospital->id,
+                'hospital_name' => $hospital->hospital_name,
+                'registration_number' => $hospital->registration_number,
+                'contact_person' => $hospital->contact_person,
+                'mobile' => $hospital->mobile,
+                'email' => $hospital->email,
+                'logo' => $hospital->logo
+                    ? Storage::disk('public')->url($hospital->logo)
+                    : null,
+                'address' => $hospital->address,
+                'city' => $hospital->city,
+                'state' => $hospital->state,
+                'pincode' => $hospital->pincode,
+                'approval_status' => $hospital->approval_status,
+            ];
 
             // Hospital Tie-ups
             $tieups = HospitalTieup::where('hospital_id', $hospitalId)
@@ -96,6 +126,7 @@ class HospitalDetailsController extends Controller
                 'success' => 1,
                 'message' => 'Hospital details fetched successfully.',
                 'data' => [
+                    'hospital' => $hospitalDetails,
                     'tieups' => $tieups,
                     'facilities' => $facilities,
                     'emergency_contacts' => $emergencyContacts,
@@ -111,4 +142,5 @@ class HospitalDetailsController extends Controller
             ], 500);
         }
     }
+
 }

@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Hospital\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\Hospital;
 use App\Models\HospitalOtp;
+use App\Services\HospitalDefaultStructureService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -166,8 +168,11 @@ class HospitalAuthController extends Controller
         return view('hospital.auth.register');
     }
 
-    public function register(Request $request)
-    {
+
+    public function register(
+        Request $request,
+        HospitalDefaultStructureService $defaultStructure
+    ) {
         $validated = $request->validate([
             'hospital_name' => 'required|string|max:255',
             'registration_number' => 'nullable|string|max:100',
@@ -189,36 +194,47 @@ class HospitalAuthController extends Controller
             ])->withInput();
         }
 
-        if ($existingHospital) {
-            // Reuse an existing unverified registration.
-            $hospital = $existingHospital;
+        $hospital = DB::transaction(function () use ($validated, $existingHospital, $defaultStructure) {
 
-            $hospital->update([
-                'hospital_name' => $validated['hospital_name'],
-                'registration_number' => $validated['registration_number'] ?? null,
-                'contact_person' => $validated['contact_person'],
-                'email' => $validated['email'] ?? null,
-                'address' => $validated['address'] ?? null,
-                'city' => $validated['city'] ?? null,
-                'state' => $validated['state'] ?? null,
-                'pincode' => $validated['pincode'] ?? null,
-            ]);
-        } else {
-            $hospital = Hospital::create([
-                'hospital_name' => $validated['hospital_name'],
-                'registration_number' => $validated['registration_number'] ?? null,
-                'contact_person' => $validated['contact_person'],
-                'mobile' => $validated['mobile'],
-                'email' => $validated['email'] ?? null,
-                'address' => $validated['address'] ?? null,
-                'city' => $validated['city'] ?? null,
-                'state' => $validated['state'] ?? null,
-                'pincode' => $validated['pincode'] ?? null,
-                'is_mobile_verified' => 0,
-                'approval_status' => 'pending',
-                'is_active' => 0,
-            ]);
-        }
+            if ($existingHospital) {
+
+                // Reuse existing unverified registration
+                $hospital = $existingHospital;
+
+                $hospital->update([
+                    'hospital_name' => $validated['hospital_name'],
+                    'registration_number' => $validated['registration_number'] ?? null,
+                    'contact_person' => $validated['contact_person'],
+                    'email' => $validated['email'] ?? null,
+                    'address' => $validated['address'] ?? null,
+                    'city' => $validated['city'] ?? null,
+                    'state' => $validated['state'] ?? null,
+                    'pincode' => $validated['pincode'] ?? null,
+                ]);
+
+            } else {
+
+                $hospital = Hospital::create([
+                    'hospital_name' => $validated['hospital_name'],
+                    'registration_number' => $validated['registration_number'] ?? null,
+                    'contact_person' => $validated['contact_person'],
+                    'mobile' => $validated['mobile'],
+                    'email' => $validated['email'] ?? null,
+                    'address' => $validated['address'] ?? null,
+                    'city' => $validated['city'] ?? null,
+                    'state' => $validated['state'] ?? null,
+                    'pincode' => $validated['pincode'] ?? null,
+                    'is_mobile_verified' => 0,
+                    'approval_status' => 'pending',
+                    'is_active' => 0,
+                ]);
+            }
+
+            // Ensure default department and designations exist
+            $defaultStructure->createFor($hospital);
+
+            return $hospital;
+        });
 
         $otp = 1234;
         // $otp = (string) random_int(100000, 999999);
@@ -249,6 +265,7 @@ class HospitalAuthController extends Controller
             ->route('hospital.register.verify')
             ->with('success', 'Registration submitted. Please verify your mobile number.');
     }
+
 
     public function showRegistrationOtp()
     {

@@ -121,7 +121,7 @@
                         <div class="col-lg-4 col-md-6">
                             <div class="mb-3">
                                 <label class="form-label">Department</label>
-                                <select name="department_id" id="department_id" class="form-select">
+                                <select name="department_id" id="department_id" class="form-select" required>
                                     <option value="">Select Department</option>
                                     @foreach($departments as $department)
                                         <option value="{{ $department->id }}"
@@ -137,7 +137,7 @@
                         <div class="col-lg-4 col-md-6">
                             <div class="mb-3">
                                 <label class="form-label">Designation</label>
-                                <select name="designation_id" id="designation_id" class="form-select">
+                                <select name="designation_id" id="designation_id" class="form-select" required>
                                     <option value="">Select Designation</option>
                                     @foreach($designations as $designation)
                                         <option value="{{ $designation->id }}"

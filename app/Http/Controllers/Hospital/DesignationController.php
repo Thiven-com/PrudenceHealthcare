@@ -7,6 +7,7 @@ use App\Models\Department;
 use App\Models\Designation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class DesignationController extends Controller
 {
@@ -53,11 +54,14 @@ class DesignationController extends Controller
             'hospital_id' => $this->hospitalId(),
             'department_id' => $department->id,
             'name' => $validated['name'],
+            'slug' => $this->generateSlug(
+                $validated['name'],
+                $this->hospitalId()
+            ),
             'code' => $validated['code'] ?? null,
             'description' => $validated['description'] ?? null,
             'is_active' => $request->boolean('is_active', true),
         ]);
-
         return redirect()
             ->route('hospital.designations.index')
             ->with('success', 'Designation created successfully.');
@@ -125,5 +129,26 @@ class DesignationController extends Controller
         return redirect()
             ->route('hospital.designations.index')
             ->with('success', 'Designation deleted successfully.');
+    }
+
+    private function generateSlug($name, $hospitalId, $excludeId = null)
+    {
+        $slug = Str::slug($name);
+        $originalSlug = $slug;
+        $count = 1;
+
+        while (
+            Designation::where('hospital_id', $hospitalId)
+                ->where('slug', $slug)
+                ->when($excludeId, function ($query) use ($excludeId) {
+                    $query->where('id', '!=', $excludeId);
+                })
+                ->exists()
+        ) {
+            $slug = $originalSlug . '-' . $count;
+            $count++;
+        }
+
+        return $slug;
     }
 }

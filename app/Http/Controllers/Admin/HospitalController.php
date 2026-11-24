@@ -8,6 +8,7 @@ use App\Models\HospitalEmergencyContact;
 use App\Models\HospitalFacility;
 use App\Models\HospitalTieup;
 use App\Models\LeadModule;
+use App\Services\HospitalDefaultStructureService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -76,8 +77,11 @@ class HospitalController extends Controller
         ));
     }
 
-    public function store(Request $request)
-    {
+
+    public function store(
+        Request $request,
+        HospitalDefaultStructureService $defaultStructure
+    ) {
         $validated = $this->validateHospital($request);
 
         $moduleIds = $this->validateHospitalModules(
@@ -96,17 +100,20 @@ class HospitalController extends Controller
 
         $this->setApprovalFields($validated);
 
-        DB::transaction(function () use ($validated, $moduleIds) {
-
+        DB::transaction(function () use ($validated, $moduleIds, $defaultStructure) {
             $hospital = Hospital::create($validated);
 
             $this->syncHospitalModules($hospital->id, $moduleIds);
+
+            // Create default Marketing Department and Designations
+            $defaultStructure->createFor($hospital);
         });
 
         return redirect()
             ->route('admin.hospitals.index')
             ->with('success', 'Hospital added successfully.');
     }
+
 
 
     public function show(Hospital $hospital)

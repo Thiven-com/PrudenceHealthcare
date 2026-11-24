@@ -16,6 +16,7 @@ class Designation extends Model
         'hospital_id',
         'department_id',
         'name',
+        'slug',
         'code',
         'description',
         'is_active',
