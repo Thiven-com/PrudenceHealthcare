@@ -103,7 +103,7 @@ class LeadController extends Controller
 
             'doctor' => [
                 'doctor_name' => ['nullable', 'string', 'max:255'],
-                'gender' => ['nullable', 'string', 'max:30'],
+                'gender' => ['nullable', 'in:male,female,other'],
                 'date_of_birth' => ['nullable', 'date'],
                 'qualification' => ['nullable', 'string', 'max:255'],
                 'specialization' => ['nullable', 'string', 'max:255'],
@@ -122,7 +122,12 @@ class LeadController extends Controller
 
             'community' => [
                 'community_name' => ['required', 'string', 'max:255'],
-                'community_type' => ['nullable', 'in:residential,social,religious,other'],
+                'community_type' => [
+                    'residential' => 'Residential',
+                    'social' => 'Social',
+                    'religious' => 'Religious',
+                    'other' => 'Other',
+                ],
                 'description' => ['nullable', 'string'],
                 'total_members' => ['nullable', 'integer', 'min:0'],
                 'president_head' => ['nullable', 'string', 'max:255'],
@@ -170,7 +175,10 @@ class LeadController extends Controller
                 'state' => ['nullable', 'string', 'max:100'],
                 'pincode' => ['nullable', 'string', 'max:20'],
                 'insurance_provider' => ['nullable', 'string', 'max:255'],
-                'policy_type' => ['nullable', 'string', 'max:100'],
+                'policy_type' => [
+                    'nullable',
+                    'in:individual,family_floater,senior_citizen,critical_illness,personal_accident,other'
+                ],
                 'policy_number' => ['nullable', 'string', 'max:100'],
                 'sum_insured' => ['nullable', 'numeric', 'min:0'],
                 'existing_premium' => ['nullable', 'numeric', 'min:0'],
@@ -189,7 +197,10 @@ class LeadController extends Controller
                 'patient_email' => ['nullable', 'email'],
                 'age' => ['nullable', 'integer', 'min:0'],
                 'gender' => ['nullable', 'string', 'max:30'],
-                'treatment_type' => ['nullable', 'string', 'max:255'],
+                'treatment_type' => [
+                    'nullable',
+                    'in:consultation,surgery,medication,therapy,diagnostic,follow_up,other'
+                ],
                 'specialization' => ['nullable', 'string', 'max:255'],
                 'disease' => ['nullable', 'string', 'max:255'],
                 'treatment_description' => ['nullable', 'string'],
@@ -197,12 +208,18 @@ class LeadController extends Controller
                 'hospital_name' => ['nullable', 'string', 'max:255'],
                 'appointment_date' => ['nullable', 'date'],
                 'appointment_time' => ['nullable', 'date_format:H:i'],
-                'appointment_status' => ['nullable', 'string', 'max:50'],
+                'appointment_status' => [
+                    'nullable',
+                    'in:pending,confirmed,completed,cancelled,rescheduled,no_show'
+                ],
                 'estimated_amount' => ['nullable', 'numeric', 'min:0'],
                 'final_amount' => ['nullable', 'numeric', 'min:0'],
                 'advance_amount' => ['nullable', 'numeric', 'min:0'],
                 'balance_amount' => ['nullable', 'numeric', 'min:0'],
-                'payment_status' => ['nullable', 'in:pending,partial,paid'],
+                'payment_status' => [
+                    'nullable',
+                    'in:pending,partial,paid'
+                ],
                 'reference_source' => ['nullable', 'string'],
                 'remarks' => ['nullable', 'string'],
             ],
@@ -221,7 +238,10 @@ class LeadController extends Controller
                 'estimated_amount' => ['nullable', 'numeric', 'min:0'],
                 'credit_provider' => ['nullable', 'string', 'max:255'],
                 'credit_amount_required' => ['nullable', 'numeric', 'min:0'],
-                'credit_type' => ['nullable', 'string', 'max:100'],
+                'credit_type' => [
+                    'nullable',
+                    'in:personal_loan,medical_loan,credit_card,emi,other'
+                ],
                 'application_reference' => ['nullable', 'string', 'max:100'],
                 'application_date' => ['nullable', 'date'],
                 'approval_status' => [
@@ -240,7 +260,10 @@ class LeadController extends Controller
             'health-advisor' => [
                 'advisor_name' => ['nullable', 'string', 'max:255'],
                 'advisor_code' => ['nullable', 'string', 'max:100'],
-                'advisor_type' => ['nullable', 'string', 'max:100'],
+                'advisor_type' => [
+                    'nullable',
+                    'in:doctor,nurse,dietitian,nutritionist,physiotherapist,counsellor,other'
+                ],
                 'qualification' => ['nullable', 'string', 'max:255'],
                 'experience' => ['nullable', 'integer', 'min:0'],
                 'description' => ['nullable', 'string'],
@@ -274,6 +297,7 @@ class LeadController extends Controller
                         'label' => ucwords(str_replace('_', ' ', $field)),
                         'required' => in_array('required', $fieldRules),
                         'type' => $this->getFieldType($field, $fieldRules),
+                        'options' => $this->getFieldOptions($field),
                     ];
                 })
                 ->values()
@@ -283,11 +307,120 @@ class LeadController extends Controller
         return $moduleFields;
     }
 
+    private function getFieldOptions(string $field): array
+    {
+        $options = [
+            'treatment_type' => [
+                'consultation' => 'Consultation',
+                'surgery' => 'Surgery',
+                'medication' => 'Medication',
+                'therapy' => 'Therapy',
+                'diagnostic' => 'Diagnostic',
+                'follow_up' => 'Follow Up',
+                'other' => 'Other',
+            ],
+
+            'appointment_status' => [
+                'pending' => 'Pending',
+                'confirmed' => 'Confirmed',
+                'completed' => 'Completed',
+                'cancelled' => 'Cancelled',
+                'rescheduled' => 'Rescheduled',
+                'no_show' => 'No Show',
+            ],
+
+            'payment_status' => [
+                'pending' => 'Pending',
+                'partial' => 'Partial',
+                'paid' => 'Paid',
+            ],
+            'community_type' => [
+                'residential' => 'Residential',
+                'social' => 'Social',
+                'religious' => 'Religious',
+                'other' => 'Other',
+            ],
+            'credit_type' => [
+                'personal_loan' => 'Personal Loan',
+                'medical_loan' => 'Medical Loan',
+                'credit_card' => 'Credit Card',
+                'emi' => 'EMI',
+                'other' => 'Other',
+            ],
+
+            'approval_status' => [
+                'not_submitted' => 'Not Submitted',
+                'documents_pending' => 'Documents Pending',
+                'application_submitted' => 'Application Submitted',
+                'approval_pending' => 'Approval Pending',
+                'approved' => 'Approved',
+                'rejected' => 'Rejected',
+            ],
+
+            'treatment_status' => [
+                'not_started' => 'Not Started',
+                'in_progress' => 'In Progress',
+                'completed' => 'Completed',
+                'cancelled' => 'Cancelled',
+            ],
+            'gender' => [
+                'male' => 'Male',
+                'female' => 'Female',
+                'other' => 'Other',
+            ],
+
+            'consultation_type' => [
+                'online' => 'Online',
+                'offline' => 'Offline',
+                'both' => 'Both',
+            ],
+            'advisor_type' => [
+                'doctor' => 'Doctor',
+                'nurse' => 'Nurse',
+                'dietitian' => 'Dietitian',
+                'nutritionist' => 'Nutritionist',
+                'physiotherapist' => 'Physiotherapist',
+                'counsellor' => 'Counsellor',
+                'other' => 'Other',
+            ],
+            'policy_type' => [
+                'individual' => 'Individual',
+                'family_floater' => 'Family Floater',
+                'senior_citizen' => 'Senior Citizen',
+                'critical_illness' => 'Critical Illness',
+                'personal_accident' => 'Personal Accident',
+                'other' => 'Other',
+            ],
+        ];
+
+        return $options[$field] ?? [];
+    }
+
     /**
      * Determine dynamic input type.
      */
     private function getFieldType(string $field, array $rules): string
     {
+
+        // Dropdown fields
+        if (
+            in_array($field, [
+                'treatment_type',
+                'appointment_status',
+                'payment_status',
+                'community_type',
+                'credit_type',
+                'approval_status',
+                'treatment_status',
+                'gender',
+                'consultation_type',
+                'advisor_type',
+                'policy_type',
+            ])
+        ) {
+            return 'select';
+        }
+
         if (in_array('date', $rules)) {
             return 'date';
         }

@@ -178,6 +178,7 @@
                     <table class="table datatable" id="leadsTable">
                         <thead class="thead-light">
                             <tr>
+                                <th>S.no</th>
                                 <th>Lead ID</th>
                                 <th>Lead Name</th>
                                 <th>Module</th>
@@ -193,6 +194,7 @@
                         <tbody>
                             @forelse($leads as $lead)
                                 <tr>
+                                    <td>{{ $loop->iteration }}</td>
                                     <td>
                                         {{ $lead->leadcode ?? ('LD-' . $lead->id) }}
                                     </td>
