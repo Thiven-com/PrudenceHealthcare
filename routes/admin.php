@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\HospitalDocumentController;
 use App\Http\Controllers\Admin\LeadModuleController;
 use App\Http\Controllers\Admin\LeadOverviewController;
 use App\Http\Controllers\Admin\LeadReportController;
+use App\Http\Controllers\Admin\PerformanceTargetController;
 use App\Http\Controllers\Admin\StaffOverviewController;
 use Illuminate\Support\Facades\Route;
 
@@ -83,7 +84,15 @@ Route::prefix('admin')->name('admin.')->group(function () {
                 Route::get('/emergency', 'emergency')->name('emergency');
             });
 
-
+        Route::prefix('performance-targets')
+            ->name('performance-targets.')
+            ->controller(PerformanceTargetController::class)
+            ->group(function () {
+                Route::get('/', 'index')->name('index');
+                Route::post('/', 'store')->name('store');
+                Route::put('/{id}', 'update')->name('update');
+                Route::delete('/{id}', 'destroy')->name('destroy');
+            });
 
         Route::post('/logout', [AdminAuthController::class, 'logout'])
             ->name('logout');

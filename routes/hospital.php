@@ -3,7 +3,9 @@
 use App\Http\Controllers\Hospital\DepartmentController;
 use App\Http\Controllers\Hospital\DesignationController;
 use App\Http\Controllers\Hospital\HospitalAdditionalDetailsController;
+use App\Http\Controllers\Hospital\HospitalDailyReportController;
 use App\Http\Controllers\Hospital\LeadController;
+use App\Http\Controllers\Hospital\PerformanceTargetController;
 use App\Http\Controllers\Hospital\StaffController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Hospital\Auth\HospitalAuthController;
@@ -64,6 +66,15 @@ Route::prefix('hospital')->name('hospital.')->group(function () {
                 Route::delete('/{type}/{id}', 'destroy')->name('destroy');
             });
 
+        Route::prefix('performance-targets')
+            ->name('performance-targets.')
+            ->controller(PerformanceTargetController::class)
+            ->group(function () {
+                Route::get('/', 'index')->name('index');
+                Route::post('/', 'store')->name('store');
+                Route::put('/{id}', 'update')->name('update');
+                Route::delete('/{id}', 'destroy')->name('destroy');
+            });
         Route::post('/logout', [HospitalAuthController::class, 'logout'])
             ->name('logout');
     });

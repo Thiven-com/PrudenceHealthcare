@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\StaffApp\HospitalDetailsController;
+use App\Http\Controllers\StaffApp\PerformanceController;
 use App\Http\Controllers\StaffApp\StaffAuthController;
 use App\Http\Controllers\StaffApp\StaffController;
+use App\Http\Controllers\StaffApp\StaffDailyReportController;
 use App\Http\Controllers\StaffApp\StaffDashboardController;
 use App\Http\Controllers\StaffApp\StaffFollowUpController;
 use App\Http\Controllers\StaffApp\StaffLeadController;
@@ -46,6 +48,27 @@ Route::name('api.staff.')->group(function () {
         Route::post('/add-member', [StaffController::class, 'store']);
         Route::get('/members/{id}', [StaffController::class, 'show']);
 
+        // My daily reports
+        Route::get('/daily-reports', [StaffDailyReportController::class, 'index']);
+        Route::get('/daily-reports/today', [StaffDailyReportController::class, 'today']);
+        Route::post('/daily-reports', [StaffDailyReportController::class, 'store']);
+        Route::get('/daily-reports/{id}', [StaffDailyReportController::class, 'show']);
+        Route::put('/daily-reports/{id}', [StaffDailyReportController::class, 'update']);
+
+        // Daily activities
+        Route::post('/daily-reports/{reportId}/activities', [StaffDailyReportController::class, 'storeActivity']);
+        Route::put('/daily-reports/{reportId}/activities/{activityId}', [StaffDailyReportController::class, 'updateActivity']);
+        Route::delete('/daily-reports/{reportId}/activities/{activityId}', [StaffDailyReportController::class, 'destroyActivity']);
+
+        // Submit report
+        Route::post('/daily-reports/{id}/submit', [StaffDailyReportController::class, 'submit']);
+
+        // Reports from staff members added by me
+        Route::get('/team-daily-reports', [StaffDailyReportController::class, 'teamReports']);
+        Route::get('/team-daily-reports/{id}', [StaffDailyReportController::class, 'teamReportShow']);
+        Route::post('/team-daily-reports/{id}/review', [StaffDailyReportController::class, 'managerReview']);
+        Route::get('/my-performance', [PerformanceController::class, 'index'])
+            ->name('my-performance');
         Route::post('/logout', [StaffAuthController::class, 'logout'])
             ->name('logout');
 
