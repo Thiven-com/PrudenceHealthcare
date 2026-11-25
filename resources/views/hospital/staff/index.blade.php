@@ -124,6 +124,7 @@
                         <table class="table datatable" id="staffTable">
                             <thead class="thead-light">
                                 <tr>
+                                    <th>S.no</th>
                                     <th>Employee ID</th>
                                     <th>Employee</th>
                                     <th>Department</th>
@@ -139,6 +140,7 @@
                             <tbody>
                                 @forelse($staff as $member)
                                     <tr>
+                                        <td>{{  $loop->iteration }}</td>
                                         <td>
                                             {{ $member->employee_code ?? ('EMP-' . $member->id) }}
                                         </td>

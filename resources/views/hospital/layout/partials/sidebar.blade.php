@@ -90,7 +90,7 @@
 						<ul>
 							<li class="{{ Route::is('hospital.dashboard') ? 'active' : '' }}">
 								<a href="{{ route('hospital.dashboard') }}">
-									<i class="ti ti-layout-grid fs-16 me-2"></i>
+									<i class="ti ti-smart-home fs-16 me-2"></i>
 									<span>Dashboard</span>
 								</a>
 							</li>
@@ -101,31 +101,31 @@
 						<ul>
 							<li class="{{ Route::is('hospital.departments.*') ? 'active' : '' }}">
 								<a href="{{ route('hospital.departments.index') }}">
-									<i class="ti ti-layout-grid fs-16 me-2"></i>
+									<i class="ti ti-building-community fs-16 me-2"></i>
 									<span>Departments</span>
 								</a>
 							</li>
 							<li class="{{ Route::is('hospital.designations.*') ? 'active' : '' }}">
 								<a href="{{ route('hospital.designations.index') }}">
-									<i class="ti ti-layout-grid fs-16 me-2"></i>
+									<i class="ti ti-id-badge-2 fs-16 me-2"></i>
 									<span>Designations</span>
 								</a>
 							</li>
 							<li class="{{ Route::is('hospital.staff.*') ? 'active' : '' }}">
 								<a href="{{ route('hospital.staff.index') }}">
-									<i class="ti ti-layout-grid fs-16 me-2"></i>
+									<i class="ti ti-users fs-16 me-2"></i>
 									<span>Staff</span>
 								</a>
 							</li>
 							<li class="{{ Route::is('hospital.leads.*') ? 'active' : '' }}">
 								<a href="{{ route('hospital.leads.index') }}">
-									<i class="ti ti-layout-grid fs-16 me-2"></i>
+									<i class="ti ti-user-check fs-16 me-2"></i>
 									<span>Leads</span>
 								</a>
 							</li>
 							<li class="{{ request()->routeIs('hospital.additional-details.*') ? 'active' : '' }}">
 								<a href="{{ route('hospital.additional-details.index') }}">
-									<i class="ti ti-building-hospital fs-16 me-2"></i>
+									<i class="ti ti-hospital fs-16 me-2"></i>
 									<span>Hospital Additional Details</span>
 								</a>
 							</li>
