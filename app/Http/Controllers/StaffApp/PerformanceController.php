@@ -10,6 +10,7 @@ use App\Models\PerformanceTarget;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class PerformanceController extends Controller
 {
@@ -80,29 +81,53 @@ class PerformanceController extends Controller
             $targetQuantity = (int) ($target->target_quantity ?? 0);
 
             $performance[] = [
-                'target_id'       => $target->id,
-                'task'             => $target->target_name,
-                'target_type'      => $target->target_type,
-                'target_period'    => $target->target_period,
-                'target'            => $targetQuantity,
-                'achieved'          => $achieved,
-                'remaining'         => max($targetQuantity - $achieved, 0),
-                'percentage'        => $targetQuantity > 0
+                'target_id' => $target->id,
+                'task' => $target->target_name,
+                'target_type' => $target->target_type,
+                'target_period' => $target->target_period,
+                'target' => $targetQuantity,
+                'achieved' => $achieved,
+                'remaining' => max($targetQuantity - $achieved, 0),
+                'percentage' => $targetQuantity > 0
                     ? round(($achieved / $targetQuantity) * 100, 2)
                     : 0,
-                'period_start'      => $startDate->toDateString(),
-                'period_end'        => $endDate->toDateString(),
+                'period_start' => $startDate->toDateString(),
+                'period_end' => $endDate->toDateString(),
             ];
         }
+        // Daily lead analytics for the current month
+        $monthStart = Carbon::today()->startOfMonth();
+        $monthEnd = Carbon::today()->endOfDay();
 
+        $dailyLeadCounts = Lead::where('hospital_id', $staff->hospital_id)
+            ->where('created_by', $staff->id)
+            ->whereIn('created_by_type', ['staff', get_class($staff)])
+            ->whereBetween('created_at', [$monthStart, $monthEnd])
+            ->selectRaw('DATE(created_at) as date, COUNT(*) as total')
+            ->groupBy(DB::raw('DATE(created_at)'))
+            ->orderBy('date')
+            ->pluck('total', 'date');
+
+        // Include every date, even when no leads were created.
+        $dailyLeadAnalytics = [];
+
+        for ($date = $monthStart->copy(); $date->lte($monthEnd); $date->addDay()) {
+            $dateString = $date->toDateString();
+
+            $dailyLeadAnalytics[] = [
+                'date' => $dateString,
+                'leads_count' => (int) ($dailyLeadCounts[$dateString] ?? 0),
+            ];
+        }
         return response()->json([
             'success' => true,
             'message' => 'Task vs performance fetched successfully.',
             'data' => [
-                'staff_id'       => $staff->id,
+                'staff_id' => $staff->id,
                 'designation_id' => $staff->designation_id,
-                'hospital_id'    => $staff->hospital_id,
-                'performance'    => $performance,
+                'hospital_id' => $staff->hospital_id,
+                'performance' => $performance,
+                'daily_lead_analytics' => $dailyLeadAnalytics,
             ],
         ]);
     }
