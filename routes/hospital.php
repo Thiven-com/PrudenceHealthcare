@@ -7,6 +7,7 @@ use App\Http\Controllers\Hospital\HospitalDailyReportController;
 use App\Http\Controllers\Hospital\LeadController;
 use App\Http\Controllers\Hospital\PerformanceTargetController;
 use App\Http\Controllers\Hospital\StaffController;
+use App\Http\Controllers\Hospital\StaffDailyReportController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Hospital\Auth\HospitalAuthController;
 use App\Http\Controllers\Hospital\DashboardController;
@@ -49,6 +50,16 @@ Route::prefix('hospital')->name('hospital.')->group(function () {
         Route::resource('designations', DesignationController::class);
         Route::resource('staff', StaffController::class);
         Route::resource('leads', LeadController::class);
+
+        Route::get(
+            '/staff-daily-reports',
+            [StaffDailyReportController::class, 'index']
+        )->name('staff-daily-reports.index');
+
+        Route::get(
+            '/staff-daily-reports/{id}',
+            [StaffDailyReportController::class, 'show']
+        )->name('staff-daily-reports.show');
 
         Route::prefix('additional-details')
             ->name('additional-details.')

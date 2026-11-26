@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\LeadModuleController;
 use App\Http\Controllers\Admin\LeadOverviewController;
 use App\Http\Controllers\Admin\LeadReportController;
 use App\Http\Controllers\Admin\PerformanceTargetController;
+use App\Http\Controllers\Admin\StaffDailyReportController;
 use App\Http\Controllers\Admin\StaffOverviewController;
 use Illuminate\Support\Facades\Route;
 
@@ -29,6 +30,19 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         Route::get('/dashboard', [DashboardController::class, 'index'])
             ->name('dashboard');
+
+        Route::get('/staff-overview/{id}', [StaffOverviewController::class, 'show'])
+            ->name('staff-overview.show');
+
+        Route::get(
+            '/staff-daily-reports',
+            [StaffDailyReportController::class, 'index']
+        )->name('staff-daily-reports.index');
+
+        Route::get(
+            '/staff-daily-reports/{id}',
+            [StaffDailyReportController::class, 'show']
+        )->name('staff-daily-reports.show');
 
         Route::resource('hospitals', HospitalController::class);
         Route::prefix('hospitals')->name('hospitals.')->group(function () {
@@ -72,6 +86,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         Route::get('/lead-overview/{id}', [LeadOverviewController::class, 'show'])
             ->name('lead-overview.show');
+        Route::get('/lead-overview/{module_id}', [LeadOverviewController::class, 'leadshow'])
+            ->name('lead-overview.module-leads');
+        Route::get('/lead-overview/lead/{id}', [LeadOverviewController::class, 'show'])
+            ->name('lead-overview.lead.show');
         Route::get('/lead-reports', [LeadReportController::class, 'index'])
             ->name('lead-reports.index');
 

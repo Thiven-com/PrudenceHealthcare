@@ -86,6 +86,11 @@ class LeadOverviewController extends Controller
         if ($request->filled('lead_module_id')) {
             $query->where('lead_module_id', $request->lead_module_id);
         }
+        $selectedModule = null;
+
+        if ($request->filled('lead_module_id')) {
+            $selectedModule = LeadModule::findOrFail($request->lead_module_id);
+        }
 
         // Status filter
         if ($request->filled('status')) {
@@ -117,7 +122,8 @@ class LeadOverviewController extends Controller
             'notInterestedLeads',
             'hospitals',
             'leadModules',
-            'leads'
+            'leads',
+            'selectedModule',
         ));
     }
 

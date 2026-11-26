@@ -37,7 +37,7 @@
                                     <th>Leads</th>
                                     <th>Status</th>
                                     <th>Created</th>
-                                    {{-- <th class="text-end">Actions</th> --}}
+                                    <th class="text-end">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -71,6 +71,12 @@
                                                 </button>
                                             </form>
                                         </td> --}}
+                                        <td class="text-end">
+                                            <a href="{{ route('admin.lead-overview.index', ['lead_module_id' => $module->id]) }}"
+                                                class="btn btn-sm btn-primary">
+                                                <i class="ti ti-eye me-1"></i> View
+                                            </a>
+                                        </td>
                                     </tr>
                                 @empty
                                     <tr>

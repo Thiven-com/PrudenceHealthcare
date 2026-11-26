@@ -128,4 +128,23 @@ class LeadModuleController extends Controller
             ->route('admin.lead-modules.index')
             ->with('success', 'Lead module deleted successfully.');
     }
+
+    public function viewLeads($id)
+    {
+        $module = LeadModule::findOrFail($id);
+
+        $leads = \App\Models\Lead::with([
+            'hospital',
+            'leadModule',
+            'assignedStaff',
+        ])
+            ->where('lead_module_id', $module->id)
+            ->latest()
+            ->paginate(15);
+
+        return view('admin.lead-modules.view', compact(
+            'module',
+            'leads'
+        ));
+    }
 }

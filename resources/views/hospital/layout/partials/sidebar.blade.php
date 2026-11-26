@@ -123,12 +123,26 @@
 									<span>Leads</span>
 								</a>
 							</li>
-							<li class="{{ request()->routeIs('hospital.additional-details.*') ? 'active' : '' }}">
-								<a href="{{ route('hospital.additional-details.index') }}">
-									<i class="ti ti-hospital fs-16 me-2"></i>
-									<span>Hospital Additional Details</span>
+
+							<li class="{{ request()->routeIs('performance-targets.*') ? 'active' : '' }}">
+								<a href="{{ route('hospital.performance-targets.index') }}">
+									<i class="fas fa-bullseye fs-16 me-2"></i>
+									<span>Performance Targets</span>
 								</a>
 							</li>
+							<li class="{{ request()->routeIs('staff-daily-reports.*') ? 'active' : '' }}">
+								<a href="{{ route('hospital.staff-daily-reports.index') }}">
+									<i class="ti ti-report fs-16 me-2"></i>
+									<span>Staff Daily Reports</span>
+								</a>
+							</li>
+							{{-- <li class="nav-item">
+								<a href="{{ route('hospital.performance-targets.index') }}"
+									class="nav-link {{ request()->routeIs('performance-targets.*') ? 'active' : '' }}">
+									<i class="nav-icon fas fa-bullseye"></i>
+									<p>Performance Targets</p>
+								</a>
+							</li> --}}
 						</ul>
 					</li>
 

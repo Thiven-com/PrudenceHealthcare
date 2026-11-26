@@ -125,6 +125,13 @@
 								</a>
 							</li>
 
+							<li class="{{ request()->routeIs('admin.staff-daily-reports.*') ? 'active' : '' }}">
+								<a href="{{ route('admin.staff-daily-reports.index') }}">
+									<i class="ti ti-clipboard-list fs-16 me-2"></i>
+									<span>Staff Daily Reports</span>
+								</a>
+							</li>
+
 						</ul>
 					</li>
 
